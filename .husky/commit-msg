@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+commit_msg=$(cat "$1")
+# 使用正则表达式检查提交消息
+pattern="^(feat|fix|docs|style|refactor|perf|test|chore)(\([^)]+\))?:\s.{1,100}$"
+if ! echo "$commit_msg" | grep -qE $pattern; then
+  echo "提交消息格式不正确，请使用 【 类型(范围): 描述 】创建你的提交信息"
+  echo "---类型:feat|fix|docs|style|refactor|perf|test|chore----"
+  exit 1
+fi
